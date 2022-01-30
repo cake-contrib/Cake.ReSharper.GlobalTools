@@ -13,7 +13,7 @@ internal sealed class CleanupCodeRunFromConfigFixture
     : CleanupCodeFixture
 {
     public CleanupCodeRunFromConfigFixture(
-        bool isWindows = true,
+        bool isWindows = false,
         bool useX86 = false)
         : base(isWindows, useX86)
     {

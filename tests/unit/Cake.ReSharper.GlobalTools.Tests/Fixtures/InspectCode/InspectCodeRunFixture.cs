@@ -15,7 +15,7 @@ internal sealed class InspectCodeRunFixture
     : InspectCodeFixture
 {
     public InspectCodeRunFixture(
-        bool isWindows = true,
+        bool isWindows = false,
         bool useX86 = false)
         : base(isWindows, useX86)
     {

@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Xml.Linq;
 using Cake.Core;
 using Cake.Core.Diagnostics;
@@ -94,7 +93,7 @@ public sealed class InspectCodeRunner
     /// <returns>The tool executable name.</returns>
     protected override IEnumerable<string> GetToolExecutableNames(InspectCodeSettings? settings)
     {
-        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        if (!Environment.Platform.IsWindows())
         {
             return new[] { "./inspectcode.sh" };
         }
@@ -167,7 +166,7 @@ public sealed class InspectCodeRunner
         if (settings.Measure != InspectCodeMeasure.None)
         {
             builder.AppendSwitch(
-                "--severity",
+                "--measure",
                 "=",
                 settings.Measure.ToString("G").ToUpper(CultureInfo.InvariantCulture));
         }
@@ -183,9 +182,9 @@ public sealed class InspectCodeRunner
         if (settings.OutputFileFormat != InspectCodeReportFormat.Xml)
         {
             builder.AppendSwitch(
-                "--severity",
+                "--format",
                 "=",
-                settings.OutputFileFormat.ToString("G").ToUpper(CultureInfo.InvariantCulture));
+                settings.OutputFileFormat.ToString("G"));
         }
 
         if (settings.ParallelJobs > 0)
@@ -198,7 +197,10 @@ public sealed class InspectCodeRunner
 
         if (settings.ProjectFilter != null)
         {
-            builder.AppendSwitchQuoted("--project", "=", settings.ProjectFilter);
+            builder.AppendSwitchQuoted(
+                "--project",
+                "=",
+                settings.ProjectFilter);
         }
 
         if (settings.Severity.HasValue)

@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using Cake.ReSharper.GlobalTools.CleanupCode;
+using Cake.Testing;
 using Cake.Testing.Fixtures;
 
 namespace Cake.ReSharper.GlobalTools.Tests.Fixtures.CleanupCode;
@@ -15,5 +16,17 @@ internal abstract class CleanupCodeFixture
         : base(!isWindows ? "./cleanupcode.sh" : useX86 ? "cleanupcode.x86.exe" : "cleanupcode.exe")
 #pragma warning restore S3358 // Ternary operators should not be nested
     {
+        if (!isWindows)
+        {
+            Environment = FakeEnvironment.CreateUnixEnvironment();
+        }
+        else if (useX86)
+        {
+            Environment = FakeEnvironment.CreateWindowsEnvironment(is64Bit: false);
+        }
+        else
+        {
+            Environment = FakeEnvironment.CreateWindowsEnvironment(is64Bit: true);
+        }
     }
 }

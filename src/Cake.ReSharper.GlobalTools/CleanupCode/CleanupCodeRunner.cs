@@ -2,11 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Runtime.InteropServices;
 using Cake.Core;
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
-using Cake.Core.IO.Arguments;
 using Cake.Core.Tooling;
 
 namespace Cake.ReSharper.GlobalTools.CleanupCode;
@@ -85,7 +83,7 @@ public sealed class CleanupCodeRunner
     /// <returns>The tool executable name.</returns>
     protected override IEnumerable<string> GetToolExecutableNames(CleanupCodeSettings? settings)
     {
-        if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+        if (!Environment.Platform.IsWindows())
         {
             return new[] { "./cleanupcode.sh" };
         }

@@ -32,10 +32,39 @@ public sealed class InspectCodeRunnerTests
         }
 
         [Fact]
+        public void Should_Throw_If_Settings_Is_Null()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings = null!,
+            };
+
+            // When
+            var result = Record.Exception(() => fixture.Run());
+
+            // Then
+            AssertEx.IsArgumentNullException(result, "settings");
+        }
+
+        [Fact]
+        public void Should_Find_Inspect_Code_Runner_NonWindows()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture(isWindows: false);
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal("/Working/tools/inspectcode.sh", result.Path.FullPath);
+        }
+
+        [Fact]
         public void Should_Find_Inspect_Code_Runner()
         {
             // Given
-            var fixture = new InspectCodeRunFixture();
+            var fixture = new InspectCodeRunFixture(isWindows: true);
 
             // When
             var result = fixture.Run();
@@ -48,8 +77,13 @@ public sealed class InspectCodeRunnerTests
         public void Should_Find_Inspect_Code_Runner_X86()
         {
             // Given
-            var fixture = new InspectCodeRunFixture(isWindows: true, useX86: true);
-            fixture.Settings.UseX86Tool = true;
+            var fixture = new InspectCodeRunFixture(isWindows: true, useX86: true)
+            {
+                Settings =
+                {
+                    UseX86Tool = true,
+                },
+            };
 
             // When
             var result = fixture.Run();
@@ -102,6 +136,528 @@ public sealed class InspectCodeRunnerTests
         }
 
         [Fact]
+        public void Should_Set_Caches_Home()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    CachesHome = "caches/",
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal(
+                "--caches-home=\"/Working/caches\" --build \"/Working/Test.sln\"",
+                result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Config_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    ConfigFile = "config.xml",
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal(
+                "--config=\"/Working/config.xml\" --build \"/Working/Test.sln\"",
+                result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Config_Create_File()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    ConfigCreateFile = "create.xml",
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal(
+                "--config-create=\"/Working/create.xml\"",
+                result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Disabled_Settings_Layers()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    DisabledSettingsLayers = new[]
+                    {
+                        ReSharperSettingsLayer.GlobalAll,
+                        ReSharperSettingsLayer.GlobalPerProduct,
+                        ReSharperSettingsLayer.SolutionShared,
+                        ReSharperSettingsLayer.SolutionPersonal,
+                        ReSharperSettingsLayer.ProjectShared,
+                        ReSharperSettingsLayer.ProjectPersonal,
+                    },
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal(
+                "--disable-settings-layers=GlobalAll;GlobalPerProduct;SolutionShared;SolutionPersonal;ProjectShared;ProjectPersonal --build \"/Working/Test.sln\"",
+                result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Debug_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    Debug = true,
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal("--debug --build \"/Working/Test.sln\"", result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_DotNetCorePath_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    DotNetCorePath = "/usr/local/share/dotnet/dotnet",
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal("--dotnetcore=\"/usr/local/share/dotnet/dotnet\" --build \"/Working/Test.sln\"", result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_DotNetCoreSdk_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    DotNetCoreSdk = "6.0.101",
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal("--dotnetcoresdk=6.0.101 --build \"/Working/Test.sln\"", result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Exclude_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    Exclude = new[] { "*.bat", "*.cmd" },
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal("--exclude=\"*.bat;*.cmd\" --build \"/Working/Test.sln\"", result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_ReSharper_Plugins()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    Extensions = new[]
+                    {
+                        "ReSharper.AgentSmith",
+                        "X.Y",
+                    },
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal(
+                "-x=\"ReSharper.AgentSmith;X.Y\" --build \"/Working/Test.sln\"",
+                result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Extension_Sources_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    ExtensionSources = new[]
+                    {
+                        "https://resharper-plugins.jetbrains.com/api/v2/curated-feeds/Wave_v213.0/",
+                        "https://api.nuget.org/v3/index.json"
+                    },
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal(
+                "--source=\"https://resharper-plugins.jetbrains.com/api/v2/curated-feeds/Wave_v213.0/;https://api.nuget.org/v3/index.json\" --build \"/Working/Test.sln\"",
+                result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Help()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    Help = true,
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal("--help", result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Include_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    Include = new[] { "*.bat", "*.cmd" },
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal("--include=\"*.bat;*.cmd\" --build \"/Working/Test.sln\"", result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Mono_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    MonoPath = "/Library/Frameworks/Mono.framework/Versions/Current/bin/mono",
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal("--mono=\"/Library/Frameworks/Mono.framework/Versions/Current/bin/mono\" --build \"/Working/Test.sln\"", result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_No_Buildin_Settings_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    NoBuildInSettings = true,
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal("--no-buildin-settings --build \"/Working/Test.sln\"", result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Profile_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    Profile = "profile.DotSettings",
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal(
+                "--profile=\"/Working/profile.DotSettings\" --build \"/Working/Test.sln\"",
+                result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_MsBuild_Properties_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    MsBuildProperties = new Dictionary<string, string>(StringComparer.Ordinal)
+                    {
+                        ["TreatWarningsAsErrors"] = "true",
+                        ["Optimize"] = "false",
+                    },
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal(
+                "--properties:TreatWarningsAsErrors=\"true\" --properties:Optimize=\"false\" --build \"/Working/Test.sln\"",
+                result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Targets_For_Items_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    TargetsForItems = new[] { "BeforeMainBuildTask" },
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal(
+                "--targets-for-items=BeforeMainBuildTask --build \"/Working/Test.sln\"",
+                result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Targets_For_References_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    TargetsForReferences = new[] { "BeforeDownload" },
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal(
+                "--targets-for-references=BeforeDownload --build \"/Working/Test.sln\"",
+                result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Toolset_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    Toolset = "17.0",
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal(
+                "--toolset=17.0 --build \"/Working/Test.sln\"",
+                result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Toolset_Path_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    ToolsetPath = "/usr/local/msbuild/bin/current/MSBuild.exe",
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal(
+                "--toolset-path=\"/usr/local/msbuild/bin/current/MSBuild.exe\" --build \"/Working/Test.sln\"",
+                result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Verbosity()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    Verbosity = ReSharperVerbosity.Error,
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal("--verbosity=ERROR --build \"/Working/Test.sln\"", result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Version_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    Version = true,
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal("--version", result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Build_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    Build = false,
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal(
+                "--no-build \"/Working/Test.sln\"", result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Dump_Issue_Types_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    DumpIssueTypes = true,
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal(
+                "--build --dumpIssuesTypes \"/Working/Test.sln\"", result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Measure_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    Measure = InspectCodeMeasure.Timeline,
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal(
+                "--build --measure=TIMELINE \"/Working/Test.sln\"", result.Args);
+        }
+
+        [Fact]
         public void Should_Set_Output()
         {
             // Given
@@ -142,14 +698,14 @@ public sealed class InspectCodeRunnerTests
         }
 
         [Fact]
-        public void Should_Set_Solution_Wide_Analysis_Switch()
+        public void Should_Set_Output_File_Format_Switch()
         {
             // Given
             var fixture = new InspectCodeRunFixture
             {
                 Settings =
                 {
-                    SolutionWideAnalysis = true,
+                    OutputFileFormat = InspectCodeReportFormat.Html,
                 },
             };
 
@@ -157,18 +713,19 @@ public sealed class InspectCodeRunnerTests
             var result = fixture.Run();
 
             // Then
-            Assert.Equal("--build --swea \"/Working/Test.sln\"", result.Args);
+            Assert.Equal(
+                "--build --format=Html \"/Working/Test.sln\"", result.Args);
         }
 
         [Fact]
-        public void Should_Set_No_Solution_Wide_Analysis_Switch()
+        public void Should_Set_Parallel_Jobs_Switch()
         {
             // Given
             var fixture = new InspectCodeRunFixture
             {
                 Settings =
                 {
-                    SolutionWideAnalysis = false,
+                    ParallelJobs = 4,
                 },
             };
 
@@ -176,7 +733,8 @@ public sealed class InspectCodeRunnerTests
             var result = fixture.Run();
 
             // Then
-            Assert.Equal("--build --no-swea \"/Working/Test.sln\"", result.Args);
+            Assert.Equal(
+                "--build --jobs=4 \"/Working/Test.sln\"", result.Args);
         }
 
         [Fact]
@@ -196,184 +754,6 @@ public sealed class InspectCodeRunnerTests
 
             // Then
             Assert.Equal("--build --project=\"Test.*\" \"/Working/Test.sln\"", result.Args);
-        }
-
-        [Fact]
-        public void Should_Set_MsBuild_Properties()
-        {
-            // Given
-            var fixture = new InspectCodeRunFixture
-            {
-                Settings =
-                {
-                    MsBuildProperties = new Dictionary<string, string>(StringComparer.Ordinal)
-                    {
-                        ["TreatWarningsAsErrors"] = "true",
-                        ["Optimize"] = "false",
-                    },
-                },
-            };
-
-            // When
-            var result = fixture.Run();
-
-            // Then
-            Assert.Equal(
-                "--properties:TreatWarningsAsErrors=\"true\" --properties:Optimize=\"false\" --build \"/Working/Test.sln\"",
-                result.Args);
-        }
-
-        [Fact]
-        public void Should_Set_Caches_Home()
-        {
-            // Given
-            var fixture = new InspectCodeRunFixture
-            {
-                Settings =
-                {
-                    CachesHome = "caches/",
-                },
-            };
-
-            // When
-            var result = fixture.Run();
-
-            // Then
-            Assert.Equal(
-                "--caches-home=\"/Working/caches\" --build \"/Working/Test.sln\"",
-                result.Args);
-        }
-
-        [Fact]
-        public void Should_Set_ReSharper_Plugins()
-        {
-            // Given
-            var fixture = new InspectCodeRunFixture
-            {
-                Settings =
-                {
-                    Extensions = new[]
-                    {
-                        "ReSharper.AgentSmith",
-                        "X.Y",
-                    },
-                },
-            };
-
-            // When
-            var result = fixture.Run();
-
-            // Then
-            Assert.Equal(
-                "-x=\"ReSharper.AgentSmith;X.Y\" --build \"/Working/Test.sln\"",
-                result.Args);
-        }
-
-        [Fact]
-        public void Should_Set_Debug_Switch()
-        {
-            // Given
-            var fixture = new InspectCodeRunFixture
-            {
-                Settings =
-                {
-                    Debug = true,
-                },
-            };
-
-            // When
-            var result = fixture.Run();
-
-            // Then
-            Assert.Equal("--debug --build \"/Working/Test.sln\"", result.Args);
-        }
-
-        [Fact]
-        public void Should_Set_No_Buildin_Settings_Switch()
-        {
-            // Given
-            var fixture = new InspectCodeRunFixture
-            {
-                Settings =
-                {
-                    NoBuildInSettings = true,
-                },
-            };
-
-            // When
-            var result = fixture.Run();
-
-            // Then
-            Assert.Equal("--no-buildin-settings --build \"/Working/Test.sln\"", result.Args);
-        }
-
-        [Fact]
-        public void Should_Set_Disabled_Settings_Layers()
-        {
-            // Given
-            var fixture = new InspectCodeRunFixture
-            {
-                Settings =
-                {
-                    DisabledSettingsLayers = new[]
-                    {
-                        ReSharperSettingsLayer.GlobalAll,
-                        ReSharperSettingsLayer.GlobalPerProduct,
-                        ReSharperSettingsLayer.SolutionShared,
-                        ReSharperSettingsLayer.SolutionPersonal,
-                        ReSharperSettingsLayer.ProjectShared,
-                        ReSharperSettingsLayer.ProjectPersonal,
-                    },
-                },
-            };
-
-            // When
-            var result = fixture.Run();
-
-            // Then
-            Assert.Equal(
-                "--disable-settings-layers=GlobalAll;GlobalPerProduct;SolutionShared;SolutionPersonal;ProjectShared;ProjectPersonal --build \"/Working/Test.sln\"",
-                result.Args);
-        }
-
-        [Fact]
-        public void Should_Set_Profile()
-        {
-            // Given
-            var fixture = new InspectCodeRunFixture
-            {
-                Settings =
-                {
-                    Profile = "profile.DotSettings",
-                },
-            };
-
-            // When
-            var result = fixture.Run();
-
-            // Then
-            Assert.Equal(
-                "--profile=\"/Working/profile.DotSettings\" --build \"/Working/Test.sln\"",
-                result.Args);
-        }
-
-        [Fact]
-        public void Should_Set_Verbosity()
-        {
-            // Given
-            var fixture = new InspectCodeRunFixture
-            {
-                Settings =
-                {
-                    Verbosity = ReSharperVerbosity.Error,
-                },
-            };
-
-            // When
-            var result = fixture.Run();
-
-            // Then
-            Assert.Equal("--verbosity=ERROR --build \"/Working/Test.sln\"", result.Args);
         }
 
         [Fact]
@@ -444,6 +824,82 @@ public sealed class InspectCodeRunnerTests
                 log.Entries.Any(p => p.Message.StartsWith("Code Inspection Error(s) Located.", StringComparison.Ordinal));
 
             Assert.False(logContainsInspectionResults);
+        }
+
+        [Fact]
+        public void Should_Set_Solution_Wide_Analysis_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    SolutionWideAnalysis = true,
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal("--build --swea \"/Working/Test.sln\"", result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_No_Solution_Wide_Analysis_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    SolutionWideAnalysis = false,
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal("--build --no-swea \"/Working/Test.sln\"", result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Target_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    Target = "Build",
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal("--build --target=Build \"/Working/Test.sln\"", result.Args);
+        }
+
+        [Fact]
+        public void Should_Set_Use_Absolute_Paths_Switch()
+        {
+            // Given
+            var fixture = new InspectCodeRunFixture
+            {
+                Settings =
+                {
+                    UseAbsolutePaths = true,
+                },
+            };
+
+            // When
+            var result = fixture.Run();
+
+            // Then
+            Assert.Equal("--build --absolute-paths \"/Working/Test.sln\"", result.Args);
         }
     }
 
