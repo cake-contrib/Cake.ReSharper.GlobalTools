@@ -16,17 +16,6 @@ internal abstract class InspectCodeFixture
         : base(!isWindows ? "./inspectcode.sh" : useX86 ? "inspectcode.x86.exe" : "inspectcode.exe")
 #pragma warning restore S3358 // Ternary operators should not be nested
     {
-        if (!isWindows)
-        {
-            Environment = FakeEnvironment.CreateUnixEnvironment();
-        }
-        else if (useX86)
-        {
-            Environment = FakeEnvironment.CreateWindowsEnvironment(is64Bit: false);
-        }
-        else
-        {
-            Environment = FakeEnvironment.CreateWindowsEnvironment(is64Bit: true);
-        }
+        Environment = !isWindows ? FakeEnvironment.CreateUnixEnvironment() : FakeEnvironment.CreateWindowsEnvironment(!useX86);
     }
 }

@@ -16,17 +16,6 @@ internal abstract class CleanupCodeFixture
         : base(!isWindows ? "./cleanupcode.sh" : useX86 ? "cleanupcode.x86.exe" : "cleanupcode.exe")
 #pragma warning restore S3358 // Ternary operators should not be nested
     {
-        if (!isWindows)
-        {
-            Environment = FakeEnvironment.CreateUnixEnvironment();
-        }
-        else if (useX86)
-        {
-            Environment = FakeEnvironment.CreateWindowsEnvironment(is64Bit: false);
-        }
-        else
-        {
-            Environment = FakeEnvironment.CreateWindowsEnvironment(is64Bit: true);
-        }
+        Environment = !isWindows ? FakeEnvironment.CreateUnixEnvironment() : FakeEnvironment.CreateWindowsEnvironment(!useX86);
     }
 }

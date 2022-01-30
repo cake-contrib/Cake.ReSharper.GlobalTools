@@ -337,7 +337,7 @@ public sealed class CleanupCodeRunnerTests
                     ExtensionSources = new[]
                     {
                         "https://resharper-plugins.jetbrains.com/api/v2/curated-feeds/Wave_v213.0/",
-                        "https://api.nuget.org/v3/index.json"
+                        "https://api.nuget.org/v3/index.json",
                     },
                 },
             };
