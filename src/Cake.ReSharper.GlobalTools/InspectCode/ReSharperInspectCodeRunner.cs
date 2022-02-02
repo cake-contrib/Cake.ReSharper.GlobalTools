@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Globalization;
-using System.Xml.Linq;
 using Cake.Core;
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
@@ -57,7 +56,11 @@ public sealed class ReSharperInspectCodeRunner
             return;
         }
 
-        AnalyzeResultsFile(settings.OutputFile, settings.ThrowExceptionOnFindingViolations);
+        var reportAnalyzer = ReSharperInspectCodeReportAnalyzerFactory
+            .Create(settings.OutputFileFormat, Log, FileSystem);
+        reportAnalyzer.AnalyzeResultsFile(
+            settings.OutputFile,
+            settings.ThrowExceptionOnFindingViolations);
     }
 
     /// <summary>
@@ -99,50 +102,6 @@ public sealed class ReSharperInspectCodeRunner
         }
 
         return new[] { settings?.UseX86Tool == true ? "inspectcode.x86.exe" : "inspectcode.exe" };
-    }
-
-    private void AnalyzeResultsFile(FilePath resultsFilePath, bool throwOnViolations)
-    {
-        var anyFailures = false;
-        var resultsFile = FileSystem.GetFile(resultsFilePath);
-
-        using (var stream = resultsFile.OpenRead())
-        {
-            var xmlDoc = XDocument.Load(stream);
-            var violations = xmlDoc.Descendants("IssueType")
-                .Where(i => string.Equals(
-                    i.Attribute("Severity")?.Value,
-                    "ERROR",
-                    StringComparison.OrdinalIgnoreCase));
-
-            foreach (var violation in violations)
-            {
-                Log.Warning("Code Inspection Error(s) Located. Description: {0}", violation.Attribute("Description")?.Value);
-
-                var tempViolation = violation; // Copy to temporary variable to avoid side effects.
-                var issueLookups = xmlDoc.Descendants("Issue")
-                    .Where(i => string.Equals(
-                        i.Attribute("TypeId")?.Value,
-                        tempViolation.Attribute("Id")?.Value,
-                        StringComparison.OrdinalIgnoreCase));
-
-                foreach (var issueLookup in issueLookups)
-                {
-                    var file = issueLookup.Attribute("File")?.Value ?? string.Empty;
-                    var line = issueLookup.Attribute("Line")?.Value ?? string.Empty;
-                    var message = issueLookup.Attribute("Message")?.Value ?? string.Empty;
-
-                    Log.Warning("File Name: {0} Line Number: {1} Message: {2}", file, line, message);
-                }
-
-                anyFailures = true;
-            }
-        }
-
-        if (anyFailures && throwOnViolations)
-        {
-            throw new CakeException("Code Inspection Violations found in code base.");
-        }
     }
 
 #pragma warning disable MA0051 // Method is too long
