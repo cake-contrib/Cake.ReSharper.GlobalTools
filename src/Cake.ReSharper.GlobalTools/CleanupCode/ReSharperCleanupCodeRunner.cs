@@ -9,18 +9,18 @@ using Cake.Core.Tooling;
 
 namespace Cake.ReSharper.GlobalTools.CleanupCode;
 
-public sealed class CleanupCodeRunner
-    : ReSharperGlobalToolRunner<CleanupCodeSettings>
+public sealed class ReSharperCleanupCodeRunner
+    : ReSharperGlobalToolRunner<ReSharperCleanupCodeSettings>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="CleanupCodeRunner"/> class.
+    /// Initializes a new instance of the <see cref="ReSharperCleanupCodeRunner"/> class.
     /// </summary>
     /// <param name="fileSystem">The file system.</param>
     /// <param name="environment">The environment.</param>
     /// <param name="processRunner">The process runner.</param>
     /// <param name="tools">The tool locator.</param>
     /// <param name="log">The logger.</param>
-    public CleanupCodeRunner(
+    public ReSharperCleanupCodeRunner(
         IFileSystem fileSystem,
         ICakeEnvironment environment,
         IProcessRunner processRunner,
@@ -35,7 +35,7 @@ public sealed class CleanupCodeRunner
     /// </summary>
     /// <param name="solution">The solution.</param>
     /// <param name="settings">The settings.</param>
-    public void Run(FilePath solution, CleanupCodeSettings settings)
+    public void Run(FilePath solution, ReSharperCleanupCodeSettings settings)
     {
         if (solution == null)
         {
@@ -61,7 +61,7 @@ public sealed class CleanupCodeRunner
             throw new ArgumentNullException(nameof(configFile));
         }
 
-        Run(new CleanupCodeSettings(), GetConfigArgument(configFile));
+        Run(new ReSharperCleanupCodeSettings(), GetConfigArgument(configFile));
     }
 
     /// <summary>
@@ -81,7 +81,7 @@ public sealed class CleanupCodeRunner
     /// </summary>
     /// <param name="settings">The settings.</param>
     /// <returns>The tool executable name.</returns>
-    protected override IEnumerable<string> GetToolExecutableNames(CleanupCodeSettings? settings)
+    protected override IEnumerable<string> GetToolExecutableNames(ReSharperCleanupCodeSettings? settings)
     {
         if (!Environment.Platform.IsWindows())
         {
@@ -91,7 +91,7 @@ public sealed class CleanupCodeRunner
         return new[] { settings?.UseX86Tool == true ? "cleanupcode.x86.exe" : "cleanupcode.exe" };
     }
 
-    private ProcessArgumentBuilder GetArguments(CleanupCodeSettings settings, FilePath solution)
+    private ProcessArgumentBuilder GetArguments(ReSharperCleanupCodeSettings settings, FilePath solution)
     {
         var builder = new ProcessArgumentBuilder();
 

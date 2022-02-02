@@ -7,7 +7,7 @@ namespace Cake.ReSharper.GlobalTools.InspectCode;
 /// <summary>
 /// Represents InspectCode's minimal severity report.
 /// </summary>
-public enum InspectCodeSeverity
+public enum ReSharperInspectCodeSeverity
 {
     /// <summary>
     /// Severity: INFO.

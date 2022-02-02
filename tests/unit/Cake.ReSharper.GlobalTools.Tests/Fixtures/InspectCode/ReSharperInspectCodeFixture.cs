@@ -8,10 +8,10 @@ using Cake.Testing.Fixtures;
 
 namespace Cake.ReSharper.GlobalTools.Tests.Fixtures.InspectCode;
 
-internal abstract class InspectCodeFixture
-    : ToolFixture<InspectCodeSettings>
+internal abstract class ReSharperInspectCodeFixture
+    : ToolFixture<ReSharperInspectCodeSettings>
 {
-    protected InspectCodeFixture(bool isWindows, bool useX86)
+    protected ReSharperInspectCodeFixture(bool isWindows, bool useX86)
 #pragma warning disable S3358 // Ternary operators should not be nested
         : base(!isWindows ? "./inspectcode.sh" : useX86 ? "inspectcode.x86.exe" : "inspectcode.exe")
 #pragma warning restore S3358 // Ternary operators should not be nested

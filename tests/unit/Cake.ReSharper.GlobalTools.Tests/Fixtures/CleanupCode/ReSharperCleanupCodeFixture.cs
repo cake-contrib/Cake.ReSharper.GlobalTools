@@ -8,10 +8,10 @@ using Cake.Testing.Fixtures;
 
 namespace Cake.ReSharper.GlobalTools.Tests.Fixtures.CleanupCode;
 
-internal abstract class CleanupCodeFixture
-    : ToolFixture<CleanupCodeSettings>
+internal abstract class ReSharperCleanupCodeFixture
+    : ToolFixture<ReSharperCleanupCodeSettings>
 {
-    protected CleanupCodeFixture(bool isWindows, bool useX86)
+    protected ReSharperCleanupCodeFixture(bool isWindows, bool useX86)
 #pragma warning disable S3358 // Ternary operators should not be nested
         : base(!isWindows ? "./cleanupcode.sh" : useX86 ? "cleanupcode.x86.exe" : "cleanupcode.exe")
 #pragma warning restore S3358 // Ternary operators should not be nested

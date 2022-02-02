@@ -11,18 +11,18 @@ using Cake.Core.Tooling;
 
 namespace Cake.ReSharper.GlobalTools.InspectCode;
 
-public sealed class InspectCodeRunner
-    : ReSharperGlobalToolRunner<InspectCodeSettings>
+public sealed class ReSharperInspectCodeRunner
+    : ReSharperGlobalToolRunner<ReSharperInspectCodeSettings>
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="InspectCodeRunner"/> class.
+    /// Initializes a new instance of the <see cref="ReSharperInspectCodeRunner"/> class.
     /// </summary>
     /// <param name="fileSystem">The file system.</param>
     /// <param name="environment">The environment.</param>
     /// <param name="processRunner">The process runner.</param>
     /// <param name="tools">The tool locator.</param>
     /// <param name="log">The logger.</param>
-    public InspectCodeRunner(
+    public ReSharperInspectCodeRunner(
         IFileSystem fileSystem,
         ICakeEnvironment environment,
         IProcessRunner processRunner,
@@ -37,7 +37,7 @@ public sealed class InspectCodeRunner
     /// </summary>
     /// <param name="solution">The solution.</param>
     /// <param name="settings">The settings.</param>
-    public void Run(FilePath solution, InspectCodeSettings settings)
+    public void Run(FilePath solution, ReSharperInspectCodeSettings settings)
     {
         if (solution == null)
         {
@@ -71,7 +71,7 @@ public sealed class InspectCodeRunner
             throw new ArgumentNullException(nameof(configFile));
         }
 
-        Run(new InspectCodeSettings(), GetConfigArgument(configFile));
+        Run(new ReSharperInspectCodeSettings(), GetConfigArgument(configFile));
     }
 
     /// <summary>
@@ -91,7 +91,7 @@ public sealed class InspectCodeRunner
     /// </summary>
     /// <param name="settings">The settings.</param>
     /// <returns>The tool executable name.</returns>
-    protected override IEnumerable<string> GetToolExecutableNames(InspectCodeSettings? settings)
+    protected override IEnumerable<string> GetToolExecutableNames(ReSharperInspectCodeSettings? settings)
     {
         if (!Environment.Platform.IsWindows())
         {
@@ -146,7 +146,7 @@ public sealed class InspectCodeRunner
     }
 
 #pragma warning disable MA0051 // Method is too long
-    private ProcessArgumentBuilder GetArguments(InspectCodeSettings settings, FilePath solution)
+    private ProcessArgumentBuilder GetArguments(ReSharperInspectCodeSettings settings, FilePath solution)
 #pragma warning restore MA0051 // Method is too long
     {
         var builder = new ProcessArgumentBuilder();
@@ -163,7 +163,7 @@ public sealed class InspectCodeRunner
             builder.Append("--dumpIssuesTypes");
         }
 
-        if (settings.Measure != InspectCodeMeasure.None)
+        if (settings.Measure != ReSharperInspectCodeMeasure.None)
         {
             builder.AppendSwitch(
                 "--measure",
@@ -179,7 +179,7 @@ public sealed class InspectCodeRunner
                 settings.OutputFile.MakeAbsolute(Environment).FullPath);
         }
 
-        if (settings.OutputFileFormat != InspectCodeReportFormat.Xml)
+        if (settings.OutputFileFormat != ReSharperInspectCodeReportFormat.Xml)
         {
             builder.AppendSwitch(
                 "--format",

@@ -2,19 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using Cake.Core;
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
-using Cake.ReSharper.GlobalTools.InspectCode;
-using Cake.Testing;
+using Cake.ReSharper.GlobalTools.CleanupCode;
 using NSubstitute;
 
-namespace Cake.ReSharper.GlobalTools.Tests.Fixtures.InspectCode;
+namespace Cake.ReSharper.GlobalTools.Tests.Fixtures.CleanupCode;
 
-internal sealed class InspectCodeRunFixture
-    : InspectCodeFixture
+internal sealed class ReSharperCleanupCodeRunFixture
+    : ReSharperCleanupCodeFixture
 {
-    public InspectCodeRunFixture(
+    public ReSharperCleanupCodeRunFixture(
         bool isWindows = false,
         bool useX86 = false)
         : base(isWindows, useX86)
@@ -22,9 +20,6 @@ internal sealed class InspectCodeRunFixture
         Solution = new FilePath("./Test.sln");
 
         Log = Substitute.For<ICakeLog>();
-
-        FileSystem.CreateFile("build/inspect_code.xml").SetContent(Resources.InspectCodeReportNoViolations.NormalizeLineEndings());
-        FileSystem.CreateFile("build/violations.xml").SetContent(Resources.InspectCodeReportWithViolations.NormalizeLineEndings());
     }
 
     public ICakeLog Log { get; set; }
@@ -33,7 +28,7 @@ internal sealed class InspectCodeRunFixture
 
     protected override void RunTool()
     {
-        var tool = new InspectCodeRunner(FileSystem, Environment, ProcessRunner, Tools, Log);
+        var tool = new ReSharperCleanupCodeRunner(FileSystem, Environment, ProcessRunner, Tools, Log);
         tool.Run(Solution!, Settings);
     }
 }

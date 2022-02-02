@@ -6,7 +6,7 @@ using Cake.Core.IO;
 
 namespace Cake.ReSharper.GlobalTools.InspectCode;
 
-public sealed class InspectCodeSettings
+public sealed class ReSharperInspectCodeSettings
     : ReSharperSettings
 {
     /// <summary>
@@ -38,10 +38,10 @@ public sealed class InspectCodeSettings
     public bool DumpIssueTypes { get; set; }
 
     /// <summary>
-    /// Gets or sets <see cref="InspectCodeMeasure">measure</see> indicating if tool should
+    /// Gets or sets <see cref="ReSharperInspectCodeMeasure">measure</see> indicating if tool should
     /// measure its performance [NONE, MEMORY, SAMPLING, TIMELINE].
     /// </summary>
-    public InspectCodeMeasure Measure { get; set; }
+    public ReSharperInspectCodeMeasure Measure { get; set; }
 
     /// <summary>
     /// Gets or sets the location InspectCode should write its output.
@@ -50,10 +50,10 @@ public sealed class InspectCodeSettings
     public FilePath? OutputFile { get; set; }
 
     /// <summary>
-    /// Gets or sets <see cref="InspectCodeReportFormat">format</see> in which write
+    /// Gets or sets <see cref="ReSharperInspectCodeReportFormat">format</see> in which write
     /// inspections report [Xml, Html, Text, Json] (default: Xml).
     /// </summary>
-    public InspectCodeReportFormat OutputFileFormat { get; set; }
+    public ReSharperInspectCodeReportFormat OutputFileFormat { get; set; }
 
     /// <summary>
     /// Gets or sets value indicating how many jobs should be run in parallel. 0 means as many as possible (default: 0).
@@ -68,9 +68,9 @@ public sealed class InspectCodeSettings
     public string? ProjectFilter { get; set; }
 
     /// <summary>
-    /// Gets or sets the minimal <see cref="InspectCodeSeverity">severity</see> of issues to report.
+    /// Gets or sets the minimal <see cref="ReSharperInspectCodeSeverity">severity</see> of issues to report.
     /// </summary>
-    public InspectCodeSeverity? Severity { get; set; }
+    public ReSharperInspectCodeSeverity? Severity { get; set; }
 
     /// <summary>
     /// Gets or sets a value indicating whether to skip analysis of the file

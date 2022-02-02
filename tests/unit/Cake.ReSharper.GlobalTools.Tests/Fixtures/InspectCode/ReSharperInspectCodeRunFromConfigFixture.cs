@@ -4,15 +4,15 @@
 
 using Cake.Core.Diagnostics;
 using Cake.Core.IO;
-using Cake.ReSharper.GlobalTools.CleanupCode;
+using Cake.ReSharper.GlobalTools.InspectCode;
 using NSubstitute;
 
-namespace Cake.ReSharper.GlobalTools.Tests.Fixtures.CleanupCode;
+namespace Cake.ReSharper.GlobalTools.Tests.Fixtures.InspectCode;
 
-internal sealed class CleanupCodeRunFromConfigFixture
-    : CleanupCodeFixture
+internal sealed class ReSharperInspectCodeRunFromConfigFixture
+    : ReSharperInspectCodeFixture
 {
-    public CleanupCodeRunFromConfigFixture(
+    public ReSharperInspectCodeRunFromConfigFixture(
         bool isWindows = false,
         bool useX86 = false)
         : base(isWindows, useX86)
@@ -26,7 +26,7 @@ internal sealed class CleanupCodeRunFromConfigFixture
 
     protected override void RunTool()
     {
-        var tool = new CleanupCodeRunner(FileSystem, Environment, ProcessRunner, Tools, Log);
+        var tool = new ReSharperInspectCodeRunner(FileSystem, Environment, ProcessRunner, Tools, Log);
         tool.RunFromConfig(Config!);
     }
 }

@@ -12,14 +12,16 @@ namespace Cake.ReSharper.GlobalTools.CleanupCode;
 /// <para>Contains functionality related to ReSharper's <see href="https://www.jetbrains.com/help/resharper/CleanupCode.html">CleanupCode</see> tool.</para>
 /// <para>
 /// In order to use the commands for this alias, include the following in your build.cake file to download and
-/// install from nuget.org, or specify the ToolPath within the <see cref="CleanupCodeSettings" /> class:
+/// install from nuget.org, or specify the ToolPath within the <see cref="ReSharperCleanupCodeSettings" /> class:
 /// <code>
 /// #tool "nuget:?package=JetBrains.ReSharper.GlobalTools"
 /// </code>
 /// </para>
 /// </summary>
 [CakeAliasCategory(nameof(ReSharper))]
-public static class CleanupCodeAliases
+[CakeNamespaceImport("Cake.ReSharper.GlobalTools.CleanupCode")]
+[CakeNamespaceImport("Cake.Core.IO")]
+public static class ReSharperCleanupCodeAliases
 {
     /// <summary>
     /// Cleanups the specified solution with ReSharper's CleanupCode.
@@ -28,14 +30,14 @@ public static class CleanupCodeAliases
     /// <param name="solution">The solution.</param>
     /// <example>
     /// <code>
-    /// CleanupCode("./src/MySolution.sln");
+    /// ReSharperCleanupCode("./src/MySolution.sln");
     /// </code>
     /// </example>
     [CakeMethodAlias]
-    [CakeAliasCategory(nameof(CleanupCode))]
-    public static void CleanupCode(this ICakeContext context, FilePath solution)
+    [CakeAliasCategory(nameof(ReSharperCleanupCode))]
+    public static void ReSharperCleanupCode(this ICakeContext context, FilePath solution)
     {
-        CleanupCode(context, solution, new CleanupCodeSettings());
+        ReSharperCleanupCode(context, solution, new ReSharperCleanupCodeSettings());
     }
 
     /// <summary>
@@ -54,22 +56,22 @@ public static class CleanupCodeAliases
     /// msBuildProperties.Add("configuration", configuration);
     /// msBuildProperties.Add("platform", "AnyCPU");
     ///
-    /// CleanupCode("./MySolution.sln", new CleanupCodeSettings {
+    /// ReSharperCleanupCode("./MySolution.sln", new CleanupCodeSettings {
     ///     Profile = "./MySolution.sln.DotSettings",
     ///     MsBuildProperties = msBuildProperties,
     /// });
     /// </code>
     /// </example>
     [CakeMethodAlias]
-    [CakeAliasCategory(nameof(CleanupCode))]
-    public static void CleanupCode(this ICakeContext context, FilePath solution, CleanupCodeSettings settings)
+    [CakeAliasCategory(nameof(ReSharperCleanupCode))]
+    public static void ReSharperCleanupCode(this ICakeContext context, FilePath solution, ReSharperCleanupCodeSettings settings)
     {
         if (context == null)
         {
             throw new ArgumentNullException(nameof(context));
         }
 
-        var runner = new CleanupCodeRunner(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools, context.Log);
+        var runner = new ReSharperCleanupCodeRunner(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools, context.Log);
         runner.Run(solution, settings);
     }
 
@@ -80,19 +82,19 @@ public static class CleanupCodeAliases
     /// <param name="configFile">The config file.</param>
     /// <example>
     /// <code>
-    /// CleanupCodeFromConfig("./src/cleanupcode.config");
+    /// ReSharperCleanupCodeFromConfig("./src/cleanupcode.config");
     /// </code>
     /// </example>
     [CakeMethodAlias]
-    [CakeAliasCategory(nameof(CleanupCode))]
-    public static void CleanupCodeFromConfig(this ICakeContext context, FilePath configFile)
+    [CakeAliasCategory(nameof(ReSharperCleanupCode))]
+    public static void ReSharperCleanupCodeFromConfig(this ICakeContext context, FilePath configFile)
     {
         if (context == null)
         {
             throw new ArgumentNullException(nameof(context));
         }
 
-        var runner = new CleanupCodeRunner(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools, context.Log);
+        var runner = new ReSharperCleanupCodeRunner(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools, context.Log);
         runner.RunFromConfig(configFile);
     }
 }

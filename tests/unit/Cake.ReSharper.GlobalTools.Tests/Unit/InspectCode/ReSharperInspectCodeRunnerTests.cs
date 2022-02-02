@@ -11,7 +11,7 @@ using Xunit;
 
 namespace Cake.ReSharper.GlobalTools.Tests.Unit.InspectCode;
 
-public sealed class InspectCodeRunnerTests
+public sealed class ReSharperInspectCodeRunnerTests
 {
     public sealed class TheRunMethod
     {
@@ -19,7 +19,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Throw_If_Solution_Is_Null()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Solution = null,
             };
@@ -35,7 +35,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Throw_If_Settings_Is_Null()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings = null!,
             };
@@ -51,7 +51,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Find_Inspect_Code_Runner_NonWindows()
         {
             // Given
-            var fixture = new InspectCodeRunFixture(isWindows: false);
+            var fixture = new ReSharperInspectCodeRunFixture(isWindows: false);
 
             // When
             var result = fixture.Run();
@@ -64,7 +64,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Find_Inspect_Code_Runner()
         {
             // Given
-            var fixture = new InspectCodeRunFixture(isWindows: true);
+            var fixture = new ReSharperInspectCodeRunFixture(isWindows: true);
 
             // When
             var result = fixture.Run();
@@ -77,7 +77,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Find_Inspect_Code_Runner_X86()
         {
             // Given
-            var fixture = new InspectCodeRunFixture(isWindows: true, useX86: true)
+            var fixture = new ReSharperInspectCodeRunFixture(isWindows: true, useX86: true)
             {
                 Settings =
                 {
@@ -96,7 +96,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Use_Provided_Solution_In_Process_Arguments()
         {
             // Given
-            var fixture = new InspectCodeRunFixture();
+            var fixture = new ReSharperInspectCodeRunFixture();
 
             // When
             var result = fixture.Run();
@@ -109,7 +109,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Throw_If_Process_Was_Not_Started()
         {
             // Given
-            var fixture = new InspectCodeRunFixture();
+            var fixture = new ReSharperInspectCodeRunFixture();
             fixture.GivenProcessCannotStart();
 
             // When
@@ -124,7 +124,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Throw_If_Process_Has_A_Non_Zero_Exit_Code()
         {
             // Given
-            var fixture = new InspectCodeRunFixture();
+            var fixture = new ReSharperInspectCodeRunFixture();
             fixture.GivenProcessExitsWithCode(1);
 
             // When
@@ -139,7 +139,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Caches_Home()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -160,7 +160,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Config_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -181,7 +181,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Config_Create_File()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -202,7 +202,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Disabled_Settings_Layers()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -231,7 +231,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Debug_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -250,7 +250,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_DotNetCorePath_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -269,7 +269,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_DotNetCoreSdk_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -288,7 +288,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Exclude_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -307,7 +307,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_ReSharper_Plugins()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -332,7 +332,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Extension_Sources_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -357,7 +357,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Help()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -376,7 +376,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Include_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -395,7 +395,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Mono_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -414,7 +414,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_No_Buildin_Settings_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -433,7 +433,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Profile_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -454,7 +454,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_MsBuild_Properties_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -479,7 +479,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Targets_For_Items_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -500,7 +500,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Targets_For_References_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -521,7 +521,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Toolset_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -542,7 +542,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Toolset_Path_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -563,7 +563,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Verbosity()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -582,7 +582,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Version_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -601,7 +601,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Build_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -621,7 +621,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Dump_Issue_Types_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -641,11 +641,11 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Measure_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
-                    Measure = InspectCodeMeasure.Timeline,
+                    Measure = ReSharperInspectCodeMeasure.Timeline,
                 },
             };
 
@@ -661,7 +661,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Output()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -681,7 +681,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Throw_If_OutputFile_Contains_Violations_And_Set_To_Throw()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -701,11 +701,11 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Output_File_Format_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
-                    OutputFileFormat = InspectCodeReportFormat.Html,
+                    OutputFileFormat = ReSharperInspectCodeReportFormat.Html,
                 },
             };
 
@@ -721,7 +721,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Parallel_Jobs_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -741,7 +741,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Project_Filter()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -760,11 +760,11 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Severity()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
-                    Severity = InspectCodeSeverity.Hint,
+                    Severity = ReSharperInspectCodeSeverity.Hint,
                 },
             };
 
@@ -781,7 +781,7 @@ public sealed class InspectCodeRunnerTests
             var log = new FakeLog();
 
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Log = log,
                 Settings =
@@ -806,7 +806,7 @@ public sealed class InspectCodeRunnerTests
             var log = new FakeLog();
 
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Log = log,
                 Settings =
@@ -830,7 +830,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Solution_Wide_Analysis_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -849,7 +849,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_No_Solution_Wide_Analysis_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -868,7 +868,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Target_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -887,7 +887,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Set_Use_Absolute_Paths_Switch()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -909,7 +909,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Throw_If_Config_File_Is_Null()
         {
             // Given
-            var fixture = new InspectCodeRunFromConfigFixture
+            var fixture = new ReSharperInspectCodeRunFromConfigFixture
             {
                 Config = null,
             };
@@ -925,7 +925,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Use_Provided_Config_File()
         {
             // Given
-            var fixture = new InspectCodeRunFromConfigFixture
+            var fixture = new ReSharperInspectCodeRunFromConfigFixture
             {
                 Config = "config.xml",
             };
@@ -941,7 +941,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Contain_Build_If_Build_Is_Not_Set()
         {
             // Given
-            var fixture = new InspectCodeRunFixture();
+            var fixture = new ReSharperInspectCodeRunFixture();
 
             // When
             var result = fixture.Run();
@@ -955,7 +955,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Contain_Build_If_Build_Is_Set_To_True()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {
@@ -974,7 +974,7 @@ public sealed class InspectCodeRunnerTests
         public void Should_Contain_NoBuild_If_Build_Is_Set_To_False()
         {
             // Given
-            var fixture = new InspectCodeRunFixture
+            var fixture = new ReSharperInspectCodeRunFixture
             {
                 Settings =
                 {

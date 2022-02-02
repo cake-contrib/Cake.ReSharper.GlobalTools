@@ -9,7 +9,7 @@ using Xunit;
 
 namespace Cake.ReSharper.GlobalTools.Tests.Unit.CleanupCode;
 
-public sealed class CleanupCodeRunnerTests
+public sealed class ReSharperCleanupCodeRunnerTests
 {
     public sealed class TheRunMethod
     {
@@ -17,7 +17,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Throw_If_Solution_Is_Null()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Solution = null,
             };
@@ -33,7 +33,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Throw_If_Settings_Is_Null()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings = null!,
             };
@@ -49,7 +49,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Find_Cleanup_Code_Runner_NonWindows()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture(isWindows: false);
+            var fixture = new ReSharperCleanupCodeRunFixture(isWindows: false);
 
             // When
             var result = fixture.Run();
@@ -62,7 +62,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Find_Cleanup_Code_Runner()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture(isWindows: true);
+            var fixture = new ReSharperCleanupCodeRunFixture(isWindows: true);
 
             // When
             var result = fixture.Run();
@@ -75,7 +75,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Find_Cleanup_Code_Runner_X86()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture(isWindows: true, useX86: true)
+            var fixture = new ReSharperCleanupCodeRunFixture(isWindows: true, useX86: true)
             {
                 Settings =
                 {
@@ -94,7 +94,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Use_Provided_Solution_In_Process_Arguments()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture();
+            var fixture = new ReSharperCleanupCodeRunFixture();
 
             // When
             var result = fixture.Run();
@@ -107,7 +107,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Throw_If_Process_Was_Not_Started()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture();
+            var fixture = new ReSharperCleanupCodeRunFixture();
             fixture.GivenProcessCannotStart();
 
             // When
@@ -122,7 +122,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Throw_If_Process_Has_A_Non_Zero_Exit_Code()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture();
+            var fixture = new ReSharperCleanupCodeRunFixture();
             fixture.GivenProcessExitsWithCode(1);
 
             // When
@@ -137,7 +137,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Caches_Home()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -158,7 +158,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Config_Switch()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -179,7 +179,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Config_Create_File()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -200,7 +200,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Disabled_Settings_Layers()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -229,7 +229,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Debug_Switch()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -248,7 +248,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_DotNetCorePath_Switch()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -267,7 +267,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_DotNetCoreSdk_Switch()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -286,7 +286,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Exclude_Switch()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -305,7 +305,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_ReSharper_Plugins()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -330,7 +330,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Extension_Sources_Switch()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -355,7 +355,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Help()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -374,7 +374,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Include_Switch()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -393,7 +393,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Mono_Switch()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -412,7 +412,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_No_Buildin_Settings_Switch()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -431,7 +431,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Profile_Switch()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -452,7 +452,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_MsBuild_Properties_Switch()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -477,7 +477,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Targets_For_Items_Switch()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -498,7 +498,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Targets_For_References_Switch()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -519,7 +519,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Toolset_Switch()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -540,7 +540,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Toolset_Path_Switch()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -561,7 +561,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Verbosity()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -580,7 +580,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Version_Switch()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -599,7 +599,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Set_Settings_Path_Switch()
         {
             // Given
-            var fixture = new CleanupCodeRunFixture
+            var fixture = new ReSharperCleanupCodeRunFixture
             {
                 Settings =
                 {
@@ -621,7 +621,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Throw_If_Config_File_Is_Null()
         {
             // Given
-            var fixture = new CleanupCodeRunFromConfigFixture
+            var fixture = new ReSharperCleanupCodeRunFromConfigFixture
             {
                 Config = null,
             };
@@ -637,7 +637,7 @@ public sealed class CleanupCodeRunnerTests
         public void Should_Use_Provided_Config_File()
         {
             // Given
-            var fixture = new CleanupCodeRunFromConfigFixture
+            var fixture = new ReSharperCleanupCodeRunFromConfigFixture
             {
                 Config = "config.xml",
             };

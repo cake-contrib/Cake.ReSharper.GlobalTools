@@ -6,7 +6,7 @@ using Cake.Core.IO;
 
 namespace Cake.ReSharper.GlobalTools.CleanupCode;
 
-public sealed class CleanupCodeSettings
+public sealed class ReSharperCleanupCodeSettings
     : ReSharperSettings
 {
     /// <summary>

@@ -5,27 +5,27 @@
 namespace Cake.ReSharper.GlobalTools.InspectCode;
 
 /// <summary>
-/// Represents InspectCode's own performance.
+/// Represents InspectCode's report format.
 /// </summary>
-public enum InspectCodeMeasure
+public enum ReSharperInspectCodeReportFormat
 {
     /// <summary>
-    /// Measure: NONE.
+    /// Report format: Xml.
     /// </summary>
-    None,
+    Xml,
 
     /// <summary>
-    /// Measure: MEMORY.
+    /// Report format: Html.
     /// </summary>
-    Memory,
+    Html,
 
     /// <summary>
-    /// Measure: SAMPLING.
+    /// Report format: Text.
     /// </summary>
-    Sampling,
+    Text,
 
     /// <summary>
-    /// Measure: TIMELINE.
+    /// Report format: Json.
     /// </summary>
-    Timeline,
+    Json,
 }

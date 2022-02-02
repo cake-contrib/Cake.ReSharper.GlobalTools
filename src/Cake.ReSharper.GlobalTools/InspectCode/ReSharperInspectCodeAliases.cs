@@ -12,14 +12,16 @@ namespace Cake.ReSharper.GlobalTools.InspectCode;
 /// <para>Contains functionality related to ReSharper's <see href="https://www.jetbrains.com/help/resharper/InspectCode.html">InspectCode</see> tool.</para>
 /// <para>
 /// In order to use the commands for this alias, include the following in your build.cake file to download and
-/// install from nuget.org, or specify the ToolPath within the <see cref="InspectCodeSettings" /> class:
+/// install from nuget.org, or specify the ToolPath within the <see cref="ReSharperInspectCodeSettings" /> class:
 /// <code>
 /// #tool "nuget:?package=JetBrains.ReSharper.GlobalTools"
 /// </code>
 /// </para>
 /// </summary>
 [CakeAliasCategory(nameof(ReSharper))]
-public static class InspectCodeAliases
+[CakeNamespaceImport("Cake.ReSharper.GlobalTools.InspectCode")]
+[CakeNamespaceImport("Cake.Core.IO")]
+public static class ReSharperInspectCodeAliases
 {
     /// <summary>
     /// Analyzes the specified solution with ReSharper's InspectCode.
@@ -28,14 +30,14 @@ public static class InspectCodeAliases
     /// <param name="solution">The solution.</param>
     /// <example>
     /// <code>
-    /// InspectCode("./src/MySolution.sln");
+    /// ReSharperInspectCode("./src/MySolution.sln");
     /// </code>
     /// </example>
     [CakeMethodAlias]
-    [CakeAliasCategory(nameof(InspectCode))]
-    public static void InspectCode(this ICakeContext context, FilePath solution)
+    [CakeAliasCategory(nameof(ReSharperInspectCode))]
+    public static void ReSharperInspectCode(this ICakeContext context, FilePath solution)
     {
-        InspectCode(context, solution, new InspectCodeSettings());
+        ReSharperInspectCode(context, solution, new ReSharperInspectCodeSettings());
     }
 
     /// <summary>
@@ -54,7 +56,7 @@ public static class InspectCodeAliases
     /// msBuildProperties.Add("configuration", configuration);
     /// msBuildProperties.Add("platform", "AnyCPU");
     ///
-    /// InspectCode("./MySolution.sln", new InspectCodeSettings {
+    /// ReSharperInspectCode("./MySolution.sln", new InspectCodeSettings {
     ///     SolutionWideAnalysis = true,
     ///     Profile = "./MySolution.sln.DotSettings",
     ///     MsBuildProperties = msBuildProperties,
@@ -64,15 +66,15 @@ public static class InspectCodeAliases
     /// </code>
     /// </example>
     [CakeMethodAlias]
-    [CakeAliasCategory(nameof(InspectCode))]
-    public static void InspectCode(this ICakeContext context, FilePath solution, InspectCodeSettings settings)
+    [CakeAliasCategory(nameof(ReSharperInspectCode))]
+    public static void ReSharperInspectCode(this ICakeContext context, FilePath solution, ReSharperInspectCodeSettings settings)
     {
         if (context == null)
         {
             throw new ArgumentNullException(nameof(context));
         }
 
-        var runner = new InspectCodeRunner(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools, context.Log);
+        var runner = new ReSharperInspectCodeRunner(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools, context.Log);
         runner.Run(solution, settings);
     }
 
@@ -83,19 +85,19 @@ public static class InspectCodeAliases
     /// <param name="configFile">The config file.</param>
     /// <example>
     /// <code>
-    /// InspectCodeFromConfig("./src/inspectcode.config");
+    /// ReSharperInspectCodeFromConfig("./src/inspectcode.config");
     /// </code>
     /// </example>
     [CakeMethodAlias]
-    [CakeAliasCategory(nameof(InspectCode))]
-    public static void InspectCodeFromConfig(this ICakeContext context, FilePath configFile)
+    [CakeAliasCategory(nameof(ReSharperInspectCode))]
+    public static void ReSharperInspectCodeFromConfig(this ICakeContext context, FilePath configFile)
     {
         if (context == null)
         {
             throw new ArgumentNullException(nameof(context));
         }
 
-        var runner = new InspectCodeRunner(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools, context.Log);
+        var runner = new ReSharperInspectCodeRunner(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools, context.Log);
         runner.RunFromConfig(configFile);
     }
 }
