@@ -16,6 +16,12 @@ public static class ReSharperInspectCodeReportAnalyzerFactory
         IFileSystem fileSystem) =>
         format switch
         {
+            ReSharperInspectCodeReportFormat.Html =>
+                new ReSharperInspectCodeHtmlReportAnalyzer(log, fileSystem),
+            ReSharperInspectCodeReportFormat.Json =>
+                new ReSharperInspectCodeJsonReportAnalyzer(log, fileSystem),
+            ReSharperInspectCodeReportFormat.Text =>
+                new ReSharperInspectCodeTextReportAnalyzer(log, fileSystem),
             ReSharperInspectCodeReportFormat.Xml =>
                 new ReSharperInspectCodeXmlReportAnalyzer(log, fileSystem),
             _ => throw new NotSupportedException(),

@@ -4,12 +4,12 @@
     <IsTestProject>true</IsTestProject>
     <NoWarn>$(NoWarn);CC0022;CC0057;CC0091</NoWarn>
   </PropertyGroup>
-  <ItemGroup>
+  <ItemGroup Condition=" '$(Sample)' != 'true' ">
     <PackageReference Include="AutoFixture" Version="4.17.0" />
     <PackageReference Include="AutoFixture.AutoNSubstitute" Version="4.17.0" />
     <PackageReference Include="AutoFixture.SeedExtensions" Version="4.17.0" />
     <PackageReference Include="AutoFixture.Xunit2" Version="4.17.0" />
-    <PackageReference Include="coverlet.collector" Version="3.1.1" />
+    <PackageReference Include="coverlet.collector" Version="3.1.2" />
     <PackageReference Include="FluentAssertions" Version="6.4.0" />
     <PackageReference Include="FluentAssertions.Analyzers" Version="0.13.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />

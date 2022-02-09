@@ -136,7 +136,7 @@ public abstract class ReSharperGlobalToolRunner<TSettings>
         if (settings.Extensions != null)
         {
             builder.AppendSwitchQuoted(
-                "-x",
+                "--extensions",
                 "=",
                 string.Join(";", settings.Extensions));
         }

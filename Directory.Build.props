@@ -18,14 +18,14 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition=" '$(Sample)' != 'true' ">
     <!-- Add reference to analyzers to all projects  -->
     <PackageReference Include="AsyncFixer" Version="1.5.1" PrivateAssets="all" />
     <PackageReference Include="Asyncify" Version="0.9.7" PrivateAssets="all" />
     <PackageReference Include="codecracker.CSharp" Version="1.1.0" PrivateAssets="all" />
     <PackageReference Include="ConcurrencyLab.ParallelChecker" Version="2.2.0" PrivateAssets="all" />
     <PackageReference Include="IDisposableAnalyzers" Version="4.0.1" PrivateAssets="all" />
-    <PackageReference Include="Meziantou.Analyzer" Version="1.0.690" PrivateAssets="all" />
+    <PackageReference Include="Meziantou.Analyzer" Version="1.0.694" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis" Version="4.0.1" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.0.1" PrivateAssets="all" />
@@ -34,7 +34,6 @@
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.0.1" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="6.0.0" PrivateAssets="all" />
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="4.0.1" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.DotNet.Analyzers.Compatibility" Version="0.2.12-alpha" PrivateAssets="all" />
     <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.64" PrivateAssets="all" />
     <PackageReference Include="Puma.Security.Rules" Version="2.4.11" PrivateAssets="all" />
     <PackageReference Include="Roslynator.Analyzers" Version="4.0.2" PrivateAssets="all" />

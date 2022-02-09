@@ -324,7 +324,7 @@ public sealed class ReSharperInspectCodeRunnerTests
 
             // Then
             Assert.Equal(
-                "-x=\"ReSharper.AgentSmith;X.Y\" --build \"/Working/Test.sln\"",
+                "--extensions=\"ReSharper.AgentSmith;X.Y\" --build \"/Working/Test.sln\"",
                 result.Args);
         }
 
