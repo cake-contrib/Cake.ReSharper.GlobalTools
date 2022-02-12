@@ -665,7 +665,7 @@ public sealed class ReSharperInspectCodeRunnerTests
             {
                 Settings =
                 {
-                    OutputFile = "build/inspect_code.xml",
+                    OutputFile = "build/resharper_inspect_code.xml",
                 },
             };
 
@@ -674,7 +674,7 @@ public sealed class ReSharperInspectCodeRunnerTests
 
             // Then
             Assert.Equal(
-                "--build --output=\"/Working/build/inspect_code.xml\" \"/Working/Test.sln\"", result.Args);
+                "--build --output=\"/Working/build/resharper_inspect_code.xml\" \"/Working/Test.sln\"", result.Args);
         }
 
         [Fact]
@@ -685,7 +685,7 @@ public sealed class ReSharperInspectCodeRunnerTests
             {
                 Settings =
                 {
-                    OutputFile = new FilePath("build/violations.xml"),
+                    OutputFile = new FilePath("build/resharper_inspect_code_violations.xml"),
                     ThrowExceptionOnFindingViolations = true,
                 },
             };
@@ -776,7 +776,7 @@ public sealed class ReSharperInspectCodeRunnerTests
         }
 
         [Fact]
-        public void Should_Analyze_Output()
+        public void Should_Analyze_Xml_Output()
         {
             var log = new FakeLog();
 
@@ -786,7 +786,85 @@ public sealed class ReSharperInspectCodeRunnerTests
                 Log = log,
                 Settings =
                 {
-                    OutputFile = new FilePath("build/violations.xml"),
+                    OutputFile = new FilePath("build/resharper_inspect_code_violations.xml"),
+                },
+            };
+
+            // When
+            fixture.Run();
+
+            // Then
+            var logContainsInspectionResults =
+                log.Entries.Any(p => p.Message.StartsWith("Code Inspection Error(s) Located.", StringComparison.Ordinal));
+
+            Assert.True(logContainsInspectionResults);
+        }
+
+        [Fact]
+        public void Should_Analyze_Html_Output()
+        {
+            var log = new FakeLog();
+
+            // Given
+            var fixture = new ReSharperInspectCodeRunFixture
+            {
+                Log = log,
+                Settings =
+                {
+                    OutputFileFormat = ReSharperInspectCodeReportFormat.Html,
+                    OutputFile = new FilePath("build/resharper_inspect_code_violations.html"),
+                },
+            };
+
+            // When
+            fixture.Run();
+
+            // Then
+            var logContainsInspectionResults =
+                log.Entries.Any(p => p.Message.StartsWith("Code Inspection Error(s) Located.", StringComparison.Ordinal));
+
+            Assert.True(logContainsInspectionResults);
+        }
+
+        [Fact]
+        public void Should_Analyze_Text_Output()
+        {
+            var log = new FakeLog();
+
+            // Given
+            var fixture = new ReSharperInspectCodeRunFixture
+            {
+                Log = log,
+                Settings =
+                {
+                    OutputFileFormat = ReSharperInspectCodeReportFormat.Text,
+                    OutputFile = new FilePath("build/resharper_inspect_code_violations.txt"),
+                },
+            };
+
+            // When
+            fixture.Run();
+
+            // Then
+            var logContainsInspectionResults =
+                log.Entries.Any(p => p.Message.StartsWith("Code Inspection Error(s) Located.", StringComparison.Ordinal));
+
+            Assert.True(logContainsInspectionResults);
+        }
+
+        [Fact]
+        public void Should_Analyze_Json_Output()
+        {
+            var log = new FakeLog();
+
+            // Given
+            var fixture = new ReSharperInspectCodeRunFixture
+            {
+                Log = log,
+                Settings =
+                {
+                    OutputFileFormat = ReSharperInspectCodeReportFormat.Json,
+                    OutputFile = new FilePath("build/reports"),
                 },
             };
 
@@ -811,7 +889,7 @@ public sealed class ReSharperInspectCodeRunnerTests
                 Log = log,
                 Settings =
                 {
-                    OutputFile = new FilePath("build/violations.xml"),
+                    OutputFile = new FilePath("build/resharper_inspect_code_violations.xml"),
                     SkipOutputAnalysis = true,
                 },
             };

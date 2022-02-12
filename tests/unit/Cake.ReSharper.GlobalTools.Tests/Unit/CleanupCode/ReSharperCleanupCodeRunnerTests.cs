@@ -322,7 +322,7 @@ public sealed class ReSharperCleanupCodeRunnerTests
 
             // Then
             Assert.Equal(
-                "-x=\"ReSharper.AgentSmith;X.Y\" \"/Working/Test.sln\"",
+                "--extensions=\"ReSharper.AgentSmith;X.Y\" \"/Working/Test.sln\"",
                 result.Args);
         }
 

@@ -7,7 +7,7 @@ using Cake.Core.IO;
 
 namespace Cake.ReSharper.GlobalTools.InspectCode.ResultAnalyzers;
 
-public abstract class ReSharperInspectCodeReportAnalyzerBase
+internal abstract class ReSharperInspectCodeReportAnalyzerBase
     : IReSharperInspectCodeReportAnalyzer
 {
     protected ReSharperInspectCodeReportAnalyzerBase(
@@ -18,7 +18,7 @@ public abstract class ReSharperInspectCodeReportAnalyzerBase
         FileSystem = fileSystem ?? throw new ArgumentNullException(nameof(fileSystem));
     }
 
-    public abstract void AnalyzeResultsFile(FilePath resultsFilePath, bool throwOnViolations);
+    public abstract void AnalyzeResults(string resultsPath, bool throwOnViolations);
 
     protected ICakeLog Log { get; }
 

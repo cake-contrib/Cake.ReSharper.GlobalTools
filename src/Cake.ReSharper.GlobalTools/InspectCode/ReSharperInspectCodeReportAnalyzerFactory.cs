@@ -8,9 +8,9 @@ using Cake.ReSharper.GlobalTools.InspectCode.ResultAnalyzers;
 
 namespace Cake.ReSharper.GlobalTools.InspectCode;
 
-public static class ReSharperInspectCodeReportAnalyzerFactory
+internal static class ReSharperInspectCodeReportAnalyzerFactory
 {
-    public static IReSharperInspectCodeReportAnalyzer Create(
+    internal static IReSharperInspectCodeReportAnalyzer Create(
         ReSharperInspectCodeReportFormat format,
         ICakeLog log,
         IFileSystem fileSystem) =>

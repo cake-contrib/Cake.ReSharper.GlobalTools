@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace Cake.ReSharper.GlobalTools;
@@ -12,6 +13,7 @@ namespace Cake.ReSharper.GlobalTools;
 /// version control, or any other server.
 /// </summary>
 [CompilerGenerated]
+[ExcludeFromCodeCoverage]
 internal class NamespaceDoc
 {
 }

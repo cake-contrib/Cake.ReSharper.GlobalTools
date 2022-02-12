@@ -5,12 +5,12 @@ using Cake.Core.IO;
 
 namespace Cake.ReSharper.GlobalTools.InspectCode.ResultAnalyzers;
 
-public class ReSharperInspectCodeHtmlReportAnalyzer
+internal sealed class ReSharperInspectCodeHtmlReportAnalyzer
     : ReSharperInspectCodeReportAnalyzerBase
 {
     private readonly Regex _reSharperHtmlReportRegex;
 
-    public ReSharperInspectCodeHtmlReportAnalyzer(
+    internal ReSharperInspectCodeHtmlReportAnalyzer(
         ICakeLog log,
         IFileSystem fileSystem)
         : base(log, fileSystem)
@@ -22,12 +22,16 @@ public class ReSharperInspectCodeHtmlReportAnalyzer
                 TimeSpan.FromSeconds(30));
     }
 
-    public override void AnalyzeResultsFile(FilePath resultsFilePath, bool throwOnViolations)
+    public override void AnalyzeResults(string resultsPath, bool throwOnViolations)
     {
         var anyFailures = false;
-        var resultsFile = FileSystem.GetFile(resultsFilePath);
+        var resultsFile = FileSystem.GetFile(resultsPath);
+        if (!resultsFile.Exists)
+        {
+            return;
+        }
 
-        using (var stream = resultsFile.OpenRead())
+        using var stream = resultsFile.OpenRead();
         using (var reader = new StreamReader(stream))
         {
             var text = reader.ReadToEnd();
@@ -36,6 +40,8 @@ public class ReSharperInspectCodeHtmlReportAnalyzer
             {
                 anyFailures = true;
             }
+
+            Log.Warning("Code Inspection Error(s) Located.");
 
             foreach (Match? match in matches)
             {

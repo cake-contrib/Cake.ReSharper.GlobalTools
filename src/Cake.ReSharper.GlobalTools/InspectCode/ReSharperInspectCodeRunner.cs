@@ -58,8 +58,8 @@ public sealed class ReSharperInspectCodeRunner
 
         var reportAnalyzer = ReSharperInspectCodeReportAnalyzerFactory
             .Create(settings.OutputFileFormat, Log, FileSystem);
-        reportAnalyzer.AnalyzeResultsFile(
-            settings.OutputFile,
+        reportAnalyzer.AnalyzeResults(
+            settings.OutputFile.FullPath,
             settings.ThrowExceptionOnFindingViolations);
     }
 

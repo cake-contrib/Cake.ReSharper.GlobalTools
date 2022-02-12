@@ -25,7 +25,7 @@ public static class ReSharperInspectCodeAliases
 {
     /// <summary>
     /// Analyzes the specified solution with ReSharper's InspectCode.
-    /// Stores result in file ./build/inspect-code.xml.
+    /// Stores result in file ./build/resharper_inspect_code.xml.
     /// </summary>
     /// <param name="context">The context.</param>
     /// <param name="solution">The solution.</param>
@@ -45,7 +45,7 @@ public static class ReSharperInspectCodeAliases
             solution,
             new ReSharperInspectCodeSettings
             {
-                OutputFile = "./build/inspect-code.xml",
+                OutputFile = "./build/resharper_inspect_code.xml",
             });
     }
 
@@ -69,7 +69,7 @@ public static class ReSharperInspectCodeAliases
     ///     SolutionWideAnalysis = true,
     ///     Profile = "./MySolution.sln.DotSettings",
     ///     MsBuildProperties = msBuildProperties,
-    ///     OutputFile = resharperReportsDirectory + File("inspectcode-output.xml"),
+    ///     OutputFile = resharperReportsDirectory + File("resharper_inspectcode_output.xml"),
     ///     ThrowExceptionOnFindingViolations = true
     /// });
     /// </code>

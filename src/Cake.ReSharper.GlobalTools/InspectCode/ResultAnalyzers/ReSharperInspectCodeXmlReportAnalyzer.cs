@@ -9,20 +9,24 @@ using Cake.Core.IO;
 
 namespace Cake.ReSharper.GlobalTools.InspectCode.ResultAnalyzers;
 
-public class ReSharperInspectCodeXmlReportAnalyzer
+internal sealed class ReSharperInspectCodeXmlReportAnalyzer
     : ReSharperInspectCodeReportAnalyzerBase
 {
-    public ReSharperInspectCodeXmlReportAnalyzer(
+    internal ReSharperInspectCodeXmlReportAnalyzer(
         ICakeLog log,
         IFileSystem fileSystem)
         : base(log, fileSystem)
     {
     }
 
-    public override void AnalyzeResultsFile(FilePath resultsFilePath, bool throwOnViolations)
+    public override void AnalyzeResults(string resultsPath, bool throwOnViolations)
     {
         var anyFailures = false;
-        var resultsFile = FileSystem.GetFile(resultsFilePath);
+        var resultsFile = FileSystem.GetFile(resultsPath);
+        if (!resultsFile.Exists)
+        {
+            return;
+        }
 
         using (var stream = resultsFile.OpenRead())
         {

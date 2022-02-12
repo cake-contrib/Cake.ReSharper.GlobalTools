@@ -23,8 +23,23 @@ internal sealed class ReSharperInspectCodeRunFixture
 
         Log = Substitute.For<ICakeLog>();
 
-        FileSystem.CreateFile("build/inspect_code.xml").SetContent(Resources.InspectCodeReportNoViolations.NormalizeLineEndings());
-        FileSystem.CreateFile("build/violations.xml").SetContent(Resources.InspectCodeReportWithViolations.NormalizeLineEndings());
+        FileSystem.CreateFile("build/resharper_inspect_code.xml")
+            .SetContent(Resources.ReSharperInspectCodeXmlReportNoViolations.NormalizeLineEndings());
+        FileSystem.CreateFile("build/resharper_inspect_code_violations.xml")
+            .SetContent(Resources.ReSharperInspectCodeXmlReportWithViolations.NormalizeLineEndings());
+        FileSystem.CreateFile("build/resharper_inspect_code_violations.txt")
+            .SetContent(Resources.ReSharperInspectCodeTextReportWithViolations.NormalizeLineEndings());
+        FileSystem.CreateFile("build/resharper_inspect_code_violations.html")
+            .SetContent(Resources.ReSharperInspectCodeHtmlReportWithViolations.NormalizeLineEndings());
+        FileSystem.CreateDirectory("build/reports");
+        FileSystem.CreateFile("build/reports/resharper_inspect_code_violations1.json")
+            .SetContent(Resources.ReSharperInspectCodeJsonReport1WithViolations.NormalizeLineEndings());
+        FileSystem.CreateFile("build/reports/resharper_inspect_code_violations2.json")
+            .SetContent(Resources.ReSharperInspectCodeJsonReport2WithViolations.NormalizeLineEndings());
+        FileSystem.CreateFile("build/reports/resharper_inspect_code_violations3.json")
+            .SetContent(Resources.ReSharperInspectCodeJsonReport3WithViolations.NormalizeLineEndings());
+        FileSystem.CreateFile("build/reports/resharper_inspect_code_violations4.json")
+            .SetContent(Resources.ReSharperInspectCodeJsonReport4WithViolations.NormalizeLineEndings());
     }
 
     public ICakeLog Log { get; set; }
