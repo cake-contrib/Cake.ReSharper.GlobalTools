@@ -1,2 +1,2 @@
-#r "../../../src/Cake.ReSharper.GlobalTools/bin/debug/netcoreapp3.1/Cake.ReSharper.GlobalTools.dll"
+#r "../../../src/Cake.ReSharper.GlobalTools/bin/Debug/netcoreapp3.1/Cake.ReSharper.GlobalTools.dll"
 #load test.cake
