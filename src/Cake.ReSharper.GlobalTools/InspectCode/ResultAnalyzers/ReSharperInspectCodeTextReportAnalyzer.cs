@@ -16,7 +16,7 @@ internal sealed class ReSharperInspectCodeTextReportAnalyzer
         : base(log, fileSystem)
     {
         _reSharperTextReportRegex = new Regex(
-            ".*\\s+(?<file>[^\\s:]+)[:](?<line>\\d+)\\s(?<message>.*(?=\\r?\\n))",
+            ".*\\s+(?<file>[^\\s:]+)[:](?<line>\\d+)\\s(?<message>[^\\r\\n]+)",
             RegexOptions.Compiled | RegexOptions.Multiline | RegexOptions.ExplicitCapture,
             TimeSpan.FromSeconds(30));
     }
