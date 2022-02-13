@@ -4,18 +4,18 @@ using Xunit;
 
 namespace Cake.ReSharper.GlobalTools.Tests.Unit.InspectCode.ResultAnalyzers;
 
-public class ReSharperInspectCodeXmlReportAnalyzerTests
+public class ReSharperInspectCodeHtmlReportAnalyzerTests
 {
-    private readonly ReSharperInspectCodeXmlReportAnalyzer _sut;
+    private readonly ReSharperInspectCodeHtmlReportAnalyzer _sut;
     private readonly FakeLog _fakeLog;
     private readonly FakeFileSystem _fakeFileSystem;
 
-    public ReSharperInspectCodeXmlReportAnalyzerTests()
+    public ReSharperInspectCodeHtmlReportAnalyzerTests()
     {
         _fakeLog = new FakeLog();
         var fakeEnvironment = FakeEnvironment.CreateUnixEnvironment();
         _fakeFileSystem = new FakeFileSystem(fakeEnvironment);
-        _sut = new ReSharperInspectCodeXmlReportAnalyzer(
+        _sut = new ReSharperInspectCodeHtmlReportAnalyzer(
             _fakeLog,
             _fakeFileSystem);
     }
@@ -24,7 +24,7 @@ public class ReSharperInspectCodeXmlReportAnalyzerTests
     public void Should_Not_Throw_If_Result_File_Not_Found()
     {
         // Given
-        var resultFileName = "./non-existent-result.xml";
+        var resultFileName = "./non-existent-result.html";
         var shouldThrowException = true;
 
         // When
@@ -36,13 +36,13 @@ public class ReSharperInspectCodeXmlReportAnalyzerTests
     }
 
     [Fact]
-    public void Should_Process_Xml_Violation_File()
+    public void Should_Process_Html_Violation_File()
     {
         // Given
-        var resultFileName = "./resharper_inspect_code_violations.xml";
+        var resultFileName = "./resharper_inspect_code_violations.html";
         var shouldThrowException = true;
         _fakeFileSystem.CreateFile(resultFileName)
-            .SetContent(Resources.ReSharperInspectCodeXmlReportWithViolations);
+            .SetContent(Resources.ReSharperInspectCodeHtmlReportWithViolations);
 
         // When
         var result = Record.Exception(() =>
