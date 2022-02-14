@@ -273,7 +273,7 @@ public sealed class ReSharperInspectCodeRunnerTests
             {
                 Settings =
                 {
-                    DotNetCoreSdk = "6.0.101",
+                    DotNetCoreSdk = "6.0.102",
                 },
             };
 
@@ -281,7 +281,7 @@ public sealed class ReSharperInspectCodeRunnerTests
             var result = fixture.Run();
 
             // Then
-            Assert.Equal("--dotnetcoresdk=6.0.101 --build \"/Working/Test.sln\"", result.Args);
+            Assert.Equal("--dotnetcoresdk=6.0.102 --build \"/Working/Test.sln\"", result.Args);
         }
 
         [Fact]
