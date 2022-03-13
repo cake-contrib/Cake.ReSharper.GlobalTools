@@ -6,6 +6,14 @@
     <Sample>true</Sample>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="build\**" />
+    <Compile Remove="tools\**" />
+    <EmbeddedResource Remove="build\**" />
+    <EmbeddedResource Remove="tools\**" />
+    <None Remove="build\**" />
+    <None Remove="tools\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Cake.Frosting" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>

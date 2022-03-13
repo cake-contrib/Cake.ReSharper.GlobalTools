@@ -354,3 +354,5 @@ tests/integ/cake/tools
 tests/integ/cake/build
 tests/integ/frosting/build/tools
 tests/integ/frosting/build/build
+.reports/
+build/tools/

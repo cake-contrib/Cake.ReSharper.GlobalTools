@@ -1,7 +1,5 @@
 using System;
-using System.Threading.Tasks;
 using Cake.Core;
-using Cake.Core.Diagnostics;
 using Cake.Core.IO;
 using Cake.Frosting;
 using Cake.ReSharper.GlobalTools.InspectCode;
