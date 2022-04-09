@@ -26,43 +26,33 @@ public class BuildContext
 
         var solutionParser = new SolutionParser(context.FileSystem, context.Environment);
         var result = solutionParser.Parse(SolutionFilePath);
-        AllProjectPaths = result
+        var allProjectPaths = result
             .Projects
             .Where(p => p.Path.FullPath.EndsWith(".csproj", StringComparison.OrdinalIgnoreCase))
             .OrderBy(p => p.Path.FullPath, StringComparer.OrdinalIgnoreCase)
             .Select(p => p.Path.MakeAbsolute(context.Environment))
             .ToList();
 
-        AllProjectNames = AllProjectPaths
-            .Select(p => p.GetFilenameWithoutExtension().FullPath)
-            .ToList();
-
-        UnitTestProjectPaths = AllProjectPaths
+        var unitTestProjectPaths = allProjectPaths
             .Where(p => p.FullPath.Contains(".Tests.", StringComparison.OrdinalIgnoreCase))
             .ToList();
 
-        UnitTestProjectNames = UnitTestProjectPaths
+        UnitTestProjectNames = unitTestProjectPaths
             .Select(p => p.GetFilenameWithoutExtension().FullPath)
             .ToList();
 
-        IntegrationTestProjectPaths = AllProjectPaths
+        var integrationTestProjectPaths = allProjectPaths
             .Where(p => p.FullPath.Contains(".IntegrationTests.", StringComparison.OrdinalIgnoreCase))
             .ToList();
 
-        IntegrationTestProjectNames = IntegrationTestProjectPaths
+        IntegrationTestProjectNames = integrationTestProjectPaths
             .Select(p => p.GetFilenameWithoutExtension().FullPath)
             .ToList();
     }
 
-    public IList<string> AllProjectNames { get; set; }
-
-    public IList<FilePath> AllProjectPaths { get; set; }
-
     public string BuildConfiguration { get; set; }
 
     public IList<string> IntegrationTestProjectNames { get; set; }
-
-    public IList<FilePath> IntegrationTestProjectPaths { get; set; }
 
     public bool LocalNuGetPackages { get; set; }
 
@@ -75,6 +65,4 @@ public class BuildContext
     public string SonarToken { get; set; }
 
     public IList<string> UnitTestProjectNames { get; set; }
-
-    public IList<FilePath> UnitTestProjectPaths { get; set; }
 }

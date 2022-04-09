@@ -6,8 +6,11 @@
     <NoWarn>$(NoWarn);CC0091</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="ExternalAnnotations\**" />
     <Compile Remove="tools\**" />
+    <EmbeddedResource Remove="ExternalAnnotations\**" />
     <EmbeddedResource Remove="tools\**" />
+    <None Remove="ExternalAnnotations\**" />
     <None Remove="tools\**" />
   </ItemGroup>
   <ItemGroup>
@@ -20,5 +23,6 @@
     <PackageReference Include="Cake.Issues.Reporting.Generic" Version="1.0.0" />
     <PackageReference Include="Cake.ReSharperReports" Version="0.11.1" />
     <PackageReference Include="Cake.Sonar" Version="1.1.30" />
+    <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
   </ItemGroup>
 </Project>

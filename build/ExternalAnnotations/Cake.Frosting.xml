@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly name="Cake.Frosting">
+    <member name="T:Cake.Frosting.FrostingContext">
+        <attribute ctor="M:JetBrains.Annotations.UsedImplicitlyAttribute.#ctor(JetBrains.Annotations.ImplicitUseTargetFlags)" >
+            <argument>5</argument>
+        </attribute>
+    </member>
+</assembly>
