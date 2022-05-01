@@ -42,7 +42,7 @@ steps:
   - task: PowerShell@2
     displayName: "Run Cake script"
     inputs:
-      script: $(Build.SourcesDirectory)/build.ps1
+      filePath: $(Build.SourcesDirectory)/build.ps1
       workingDirectory: $(Build.SourcesDirectory)
 
   - task: CopyFiles@2
