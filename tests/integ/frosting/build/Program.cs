@@ -10,7 +10,7 @@ public static class Program
     {
         return new CakeHost()
             .UseContext<BuildContext>()
-            .InstallTool(new Uri("nuget:?package=JetBrains.ReSharper.GlobalTools&version=2021.3.3"))
+            .InstallTool(new Uri("nuget:?package=JetBrains.ReSharper.GlobalTools&version=2022.1.1"))
             .Run(args);
     }
 }

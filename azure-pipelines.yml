@@ -1,0 +1,83 @@
+# ASP.NET Core
+# Build and test ASP.NET Core projects targeting .NET Core.
+# Add steps that run tests, create a NuGet package, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+trigger:
+  - master
+  - feature/*
+  - refs/tags/v*
+
+pool:
+  vmImage: "windows-2022"
+
+variables:
+  buildConfiguration: "Release"
+  unitTestProjects: "**/test/unit/**/*.csproj"
+  testResultsDirectory: "d:/a/1/TestResults"
+  MSBUILDSINGLELOADCONTEXT: 1
+  disable.coverage.autogenerate: "true"
+
+steps:
+  - task: UseDotNet@2
+    displayName: "Use .NET Core SDK 3.1.x"
+    inputs:
+      packageType: "sdk"
+      version: 3.1.x
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+
+  - task: UseDotNet@2
+    displayName: "Use .NET Core SDK 5.0.x"
+    inputs:
+      packageType: "sdk"
+      version: 5.0.x
+      installationPath: $(Agent.ToolsDirectory)/dotnet
+
+  - task: UseDotNet@2
+    displayName: "Use .NET Core SDK from global.json"
+    inputs:
+      packageType: "sdk"
+      useGlobalJson: true
+
+  - task: PowerShell@2
+    displayName: "Run Cake script"
+    inputs:
+      script: "./build.ps1"
+
+  - task: CopyFiles@2
+    displayName: "Copy nuget packages"
+    inputs:
+      sourceFolder: "$(Build.SourcesDirectory)"
+      contents: "**/$(BuildConfiguration)/**/?(Cake.ReSharper.GlobalTool.*.nupkg|Cake.ReSharper.GlobalTool.*.snupkg)"
+      targetFolder: "$(Build.SourcesDirectory)/nuget"
+      CleanTargetFolder: true
+      flattenFolders: true
+
+  - task: CopyFiles@2
+    displayName: "Copy nuget packages"
+    inputs:
+      sourceFolder: "$(Build.SourcesDirectory)/nuget"
+      contents: "**/*"
+      targetFolder: "$(Build.ArtifactStagingDirectory)"
+      CleanTargetFolder: true
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: "$(Build.ArtifactStagingDirectory)"
+      artifactName: NugetPackages
+
+  - task: NuGetToolInstaller@1
+    displayName: "Install nuget"
+    condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+    inputs:
+      versionSpec:
+      checkLatest: true
+
+  - task: NuGetCommand@2
+    displayName: "Publish to nuget"
+    condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))
+    inputs:
+      command: "push"
+      packagesToPush: "$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.snupkg"
+      nuGetFeedType: "external"
+      publishFeedCredentials: "Nuget"

@@ -14,7 +14,7 @@
     <None Remove="tools\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Cake.Frosting" Version="2.1.0" />
+    <PackageReference Include="Cake.Frosting" Version="2.2.0" />
     <PackageReference Include="Cake.Issues" Version="1.0.0" />
     <PackageReference Include="Cake.Issues.DupFinder" Version="1.0.0" />
     <PackageReference Include="Cake.Issues.InspectCode" Version="1.0.0" />
@@ -23,6 +23,6 @@
     <PackageReference Include="Cake.Issues.Reporting.Generic" Version="1.0.0" />
     <PackageReference Include="Cake.ReSharperReports" Version="0.11.1" />
     <PackageReference Include="Cake.Sonar" Version="1.1.30" />
-    <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
+    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0" />
   </ItemGroup>
 </Project>

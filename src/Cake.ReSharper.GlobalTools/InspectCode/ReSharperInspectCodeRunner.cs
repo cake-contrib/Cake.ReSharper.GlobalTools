@@ -106,7 +106,6 @@ public sealed class ReSharperInspectCodeRunner
 
 #pragma warning disable MA0051 // Method is too long
     private ProcessArgumentBuilder GetArguments(ReSharperInspectCodeSettings settings, FilePath solution)
-#pragma warning restore MA0051 // Method is too long
     {
         var builder = new ProcessArgumentBuilder();
 
@@ -196,4 +195,5 @@ public sealed class ReSharperInspectCodeRunner
 
         return builder;
     }
+#pragma warning restore MA0051 // Method is too long
 }

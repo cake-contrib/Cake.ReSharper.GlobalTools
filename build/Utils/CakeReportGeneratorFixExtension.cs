@@ -60,7 +60,7 @@ public static class CakeReportGeneratorFixExtension
 
         var dotNetExecuteSettings = new DotNetExecuteSettings
         {
-            FrameworkVersion = "6.0.3",
+            FrameworkVersion = "6.0.4",
         };
 
         context.DotNetExecute(
