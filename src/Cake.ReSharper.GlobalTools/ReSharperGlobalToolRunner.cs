@@ -45,7 +45,6 @@ public abstract class ReSharperGlobalToolRunner<TSettings>
     protected bool FillArguments(
         ProcessArgumentBuilder builder,
         ReSharperSettings settings)
-#pragma warning restore MA0051 // Method is too long
     {
         if (builder is null)
         {
@@ -231,6 +230,7 @@ public abstract class ReSharperGlobalToolRunner<TSettings>
 
         return false;
     }
+#pragma warning restore MA0051 // Method is too long
 
     protected ProcessArgumentBuilder GetConfigArgument(FilePath configFile)
     {
