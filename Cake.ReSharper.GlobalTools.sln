@@ -1,0 +1,112 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{387C0139-4A7B-4E4A-9AFE-ACE279B0FFB0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D4CE8CBC-495E-438E-827C-739B327E8CD7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.ReSharper.GlobalTools", "src\Cake.ReSharper.GlobalTools\Cake.ReSharper.GlobalTools.csproj", "{C5757500-BFA4-4EA2-B3A6-A1168BFD303A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".props", ".props", "{33C23EEB-1C01-4C48-B887-7ACFA7BDA814}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		azure-pipelines.yml = azure-pipelines.yml
+		Cake.ReSharper.GlobalTools.sln.DotSettings = Cake.ReSharper.GlobalTools.sln.DotSettings
+		Cake.ruleset = Cake.ruleset
+		DeterministicBuild.targets = DeterministicBuild.targets
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		global.json = global.json
+		lgtm.yml = lgtm.yml
+		LICENSE = LICENSE
+		README.md = README.md
+		SecurityCodeScan.config.yml = SecurityCodeScan.config.yml
+		Settings.StyleCop = Settings.StyleCop
+		stylecop.json = stylecop.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".props", ".props", "{750F130A-5282-48C8-AC9C-21BAA90735E9}"
+	ProjectSection(SolutionItems) = preProject
+		tests\Directory.Build.props = tests\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "unit", "unit", "{E2262E0C-02D2-4FD4-A283-0C3840B96F1B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.ReSharper.GlobalTools.Tests", "tests\unit\Cake.ReSharper.GlobalTools.Tests\Cake.ReSharper.GlobalTools.Tests.csproj", "{1A940FB0-313E-4FCC-86ED-6FF355E7550E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "integ", "integ", "{096AB1C2-B542-46A9-96A6-FB3038990640}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frosting", "frosting", "{F506EBE5-3733-454B-8C82-FBF6A9AAF2CF}"
+	ProjectSection(SolutionItems) = preProject
+		tests\integ\frosting\build.ps1 = tests\integ\frosting\build.ps1
+		tests\integ\frosting\build.sh = tests\integ\frosting\build.sh
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cake", "cake", "{3B7486BA-D717-4170-B505-894F6B049D50}"
+	ProjectSection(SolutionItems) = preProject
+		tests\integ\cake\test.cake = tests\integ\cake\test.cake
+		tests\integ\cake\test_net5.0.cake = tests\integ\cake\test_net5.0.cake
+		tests\integ\cake\test_net6.0.cake = tests\integ\cake\test_net6.0.cake
+		tests\integ\cake\test_netcoreapp3.1.cake = tests\integ\cake\test_netcoreapp3.1.cake
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{B0887D19-F61B-4D53-BEC5-52C26D4155A4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{874DCFC3-AD96-4439-9839-B9EA8A43CA0C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Build", "tests\integ\frosting\build\Build.csproj", "{10A9BB6E-164E-40B9-8B77-8CC9CCA1F8B1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample", "tests\integ\sample\Sample.csproj", "{FAB263A5-0B37-4453-97E9-F79977CC755C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".config", ".config", "{067180E9-622C-48C1-AE14-5B4B50A01E97}"
+	ProjectSection(SolutionItems) = preProject
+		tests\integ\cake\.config\dotnet-tools.json = tests\integ\cake\.config\dotnet-tools.json
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5757500-BFA4-4EA2-B3A6-A1168BFD303A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5757500-BFA4-4EA2-B3A6-A1168BFD303A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5757500-BFA4-4EA2-B3A6-A1168BFD303A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5757500-BFA4-4EA2-B3A6-A1168BFD303A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A940FB0-313E-4FCC-86ED-6FF355E7550E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A940FB0-313E-4FCC-86ED-6FF355E7550E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A940FB0-313E-4FCC-86ED-6FF355E7550E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A940FB0-313E-4FCC-86ED-6FF355E7550E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10A9BB6E-164E-40B9-8B77-8CC9CCA1F8B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10A9BB6E-164E-40B9-8B77-8CC9CCA1F8B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10A9BB6E-164E-40B9-8B77-8CC9CCA1F8B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10A9BB6E-164E-40B9-8B77-8CC9CCA1F8B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAB263A5-0B37-4453-97E9-F79977CC755C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAB263A5-0B37-4453-97E9-F79977CC755C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAB263A5-0B37-4453-97E9-F79977CC755C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAB263A5-0B37-4453-97E9-F79977CC755C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C5757500-BFA4-4EA2-B3A6-A1168BFD303A} = {387C0139-4A7B-4E4A-9AFE-ACE279B0FFB0}
+		{750F130A-5282-48C8-AC9C-21BAA90735E9} = {D4CE8CBC-495E-438E-827C-739B327E8CD7}
+		{E2262E0C-02D2-4FD4-A283-0C3840B96F1B} = {D4CE8CBC-495E-438E-827C-739B327E8CD7}
+		{1A940FB0-313E-4FCC-86ED-6FF355E7550E} = {E2262E0C-02D2-4FD4-A283-0C3840B96F1B}
+		{096AB1C2-B542-46A9-96A6-FB3038990640} = {D4CE8CBC-495E-438E-827C-739B327E8CD7}
+		{F506EBE5-3733-454B-8C82-FBF6A9AAF2CF} = {096AB1C2-B542-46A9-96A6-FB3038990640}
+		{3B7486BA-D717-4170-B505-894F6B049D50} = {096AB1C2-B542-46A9-96A6-FB3038990640}
+		{B0887D19-F61B-4D53-BEC5-52C26D4155A4} = {096AB1C2-B542-46A9-96A6-FB3038990640}
+		{874DCFC3-AD96-4439-9839-B9EA8A43CA0C} = {F506EBE5-3733-454B-8C82-FBF6A9AAF2CF}
+		{10A9BB6E-164E-40B9-8B77-8CC9CCA1F8B1} = {874DCFC3-AD96-4439-9839-B9EA8A43CA0C}
+		{FAB263A5-0B37-4453-97E9-F79977CC755C} = {B0887D19-F61B-4D53-BEC5-52C26D4155A4}
+		{067180E9-622C-48C1-AE14-5B4B50A01E97} = {3B7486BA-D717-4170-B505-894F6B049D50}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {072890E2-1C13-474B-9F07-79C901CFAD00}
+	EndGlobalSection
+EndGlobal
