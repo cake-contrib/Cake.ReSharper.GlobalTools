@@ -45,27 +45,19 @@ steps:
       filePath: $(Build.SourcesDirectory)/build.ps1
       workingDirectory: $(Build.SourcesDirectory)
 
-  - task: CopyFiles@2
-    displayName: "Copy nuget packages"
-    inputs:
-      sourceFolder: "$(Build.SourcesDirectory)"
-      contents: "**/$(BuildConfiguration)/**/?(Cake.ReSharper.GlobalTool.*.nupkg|Cake.ReSharper.GlobalTool.*.snupkg)"
-      targetFolder: "$(Build.SourcesDirectory)/nuget"
-      CleanTargetFolder: true
-      flattenFolders: true
+  # - task: CopyFiles@2
+  #   displayName: "Copy nuget packages"
+  #   inputs:
+  #     sourceFolder: "$(Build.SourcesDirectory)"
+  #     contents: "**/$(BuildConfiguration)/**/?(Cake.ReSharper.GlobalTool.*.nupkg|Cake.ReSharper.GlobalTool.*.snupkg)"
+  #     targetFolder: "$(Build.ArtifactStagingDirectory)"
+  #     CleanTargetFolder: true
+  #     flattenFolders: true
 
-  - task: CopyFiles@2
-    displayName: "Copy nuget packages"
-    inputs:
-      sourceFolder: "$(Build.SourcesDirectory)/nuget"
-      contents: "**/*"
-      targetFolder: "$(Build.ArtifactStagingDirectory)"
-      CleanTargetFolder: true
-
-  - task: PublishBuildArtifacts@1
-    inputs:
-      pathToPublish: "$(Build.ArtifactStagingDirectory)"
-      artifactName: NugetPackages
+  # - task: PublishBuildArtifacts@1
+  #   inputs:
+  #     pathToPublish: "$(Build.ArtifactStagingDirectory)"
+  #     artifactName: NugetPackages
 
   # - task: NuGetToolInstaller@1
   #   displayName: "Install nuget"
